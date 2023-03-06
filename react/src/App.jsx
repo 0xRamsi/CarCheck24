@@ -8,6 +8,7 @@ export default function App(){
     const [history, setHistory] = useState([]);
     const [shape, setShape] = useState('rectangle');
     const [parameters, setParameters] = useState('{a:1, b:2}');
+    const [selectedShape, setSelectedShape] = useState(1);
 
     const parseItems = (list) => {
         return list.map(item => JSON.parse(item));
@@ -20,6 +21,11 @@ export default function App(){
             .then(setHistory);
     }, [])
 
+    useEffect(() => {
+        console.log(selectedShape)
+    }, [selectedShape])
+
+
     const getResultFromServer = () => {
         fetch(`/Shapes/Calculate/${shape}/${parameters}`)
             .then(res => res.json())
@@ -27,13 +33,19 @@ export default function App(){
     }
 
     const circleSetter = (radius) => {
-        setParameters(radius);
+        if(selectedShape == 'circle'){
+            setParameters(radius);
+        }
     }
     const triangleSetter = (a, b, c) => {
-        setParameters(JSON.stringify({a, b, c}));
+        if(selectedShape == 'triangle') {
+            setParameters(JSON.stringify({a, b, c}));
+        }
     }
     const rectangleSetter = (a, b) => {
-        setParameters(JSON.stringify({a, b}));
+        if(selectedShape == 'rectangle'){
+            setParameters(JSON.stringify({a, b}));
+        }
     }
 
     return (<>
@@ -44,9 +56,12 @@ export default function App(){
             <button type='button' onClick={getResultFromServer}>Calculate</button>
         </div>
         <hr />
-        <div style={{display: 'grid', gap: '5px'}}>
-            <Circle setter={circleSetter} />
+        <div style={{display: 'grid', gap: '5px', gridTemplateColumns: 'auto 1fr'}}>
+            <input type='radio' name='shapeSelector' onChange={e => setSelectedShape(e.target.value)} id='circleRadio' value='circle'></input>
+            <Circle setter={circleSetter} for='circleRadio' />
+            <input type='radio' name='shapeSelector' onChange={e => setSelectedShape(e.target.value)} id='triangleRadio' value='triangle'></input>
             <Triangle setter={triangleSetter} />
+            <input type='radio' name='shapeSelector' onChange={e => setSelectedShape(e.target.value)} id='rectangleRadio' value='rectangle'></input>
             <Rectangle setter={rectangleSetter} />
         </div>
         <hr />

@@ -6,8 +6,8 @@ export default function Triangle({ setter }){
     const [c, setC] = useState(0);
 
     useEffect(() => {
-        setter(a, b);
-    }, [a, b]);
+        setter(a, b, c);
+    }, [a, b, c]);
 
     return (<div>
         <span>Triangle</span>
