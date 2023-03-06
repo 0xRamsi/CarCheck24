@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import Circle from './components/circle.jsx';
 import History from './components/History.jsx';
+import Rectangle from './components/Rectangle.jsx';
+import Triangle from './components/triangle.jsx';
 
 export default function App(){
     const [history, setHistory] = useState([]);
@@ -23,6 +26,16 @@ export default function App(){
             .then(data => setHistory([...history, data]));
     }
 
+    const circleSetter = (radius) => {
+        setParameters(radius);
+    }
+    const triangleSetter = (a, b, c) => {
+        setParameters(JSON.stringify({a, b, c}));
+    }
+    const rectangleSetter = (a, b) => {
+        setParameters(JSON.stringify({a, b}));
+    }
+
     return (<>
         <h3>Carcheck24, Bewerbungsarbeit von Ramzi</h3>
         <div style={{display: 'flex', gap: '5px'}}>
@@ -30,6 +43,13 @@ export default function App(){
             Parameters <input type="text" onChange={e => setParameters(e.target.value)} value={parameters} />
             <button type='button' onClick={getResultFromServer}>Calculate</button>
         </div>
+        <hr />
+        <div style={{display: 'grid', gap: '5px'}}>
+            <Circle setter={circleSetter} />
+            <Triangle setter={triangleSetter} />
+            <Rectangle setter={rectangleSetter} />
+        </div>
+        <hr />
         <History history={history} />
     </>);
 }
