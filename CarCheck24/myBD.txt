@@ -1,0 +1,3 @@
+{"shape":"rectangle","parameters":"{a:1, b:2}","circumference":"6"}
+{"shape":"rectangle","parameters":"{a:1, b:4}","circumference":"10"}
+{"shape":"triangle","parameters":"{a:1, b:4, c: 5}","circumference":"10"}
